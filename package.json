@@ -21,28 +21,29 @@
             }
         ],
         "configuration": {
-            "title": "Clickr",
+            "title": "Testy",
             "properties": {
-                "clickr.required.setCodeSourceDirectory": {
+                "testy.required.setCodeSourceDirectory": {
                     "type": "string",
                     "default": "",
                     "description": "Specifies the folder path containing the source code of your application."
                 },
-                "clickr.required.setTestSourceDirectory": {
+                "testy.required.setTestSourceDirectory": {
                     "type": "string",
                     "default": "",
                     "description": "Specifies the folder path containing the test code of your application."
                 },
-                "clickr.testGeneration.setTestFileNameGenerationType": {
+                "testy.testGeneration.setTestFileNameGenerationType": {
                     "type": "string",
                     "default": "prefix",
-                    "enum": ["prefix", "suffix"],
+                    "enum": ["prefix", "suffix", "none"],
                     "enumDescriptions": [
-                        "Adds a prefix to the start of a file name. Example: (prefix 'test_' for python tests) test_class_file.py",
-                        "Adds a suffix to the end of a file name. Example:(suffix 'Test' for java tests) ClassFileTest.java"
+                        "Adds a prefix to the start of a file name. Example: (prefix 'test_' for python tests) test_class_file.py.",
+                        "Adds a suffix to the end of a file name. Example:(suffix 'Test' for java tests) ClassFileTest.java.",
+                        "Does not change source file's name when generating test file into test folder."
                     ]
                 },
-                "clickr.testGeneration.setTestFileAppendText": {
+                "testy.testGeneration.setTestFileAppendText": {
                     "type": "string",
                     "default": "test_",
                     "markdownDescription": "Based on `#clickr.testGeneration.setTestFileNameGenerationType#`, change the appended prefix/suffix text when generating a test file based on your project's use case."
