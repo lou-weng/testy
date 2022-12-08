@@ -1,12 +1,7 @@
 import * as vscode from 'vscode';
 
 export default abstract class StatusItem {
-    protected context: vscode.ExtensionContext;
+    public abstract getStatusBarItem(): vscode.StatusBarItem;
 
-    constructor(context: vscode.ExtensionContext) {
-        this.context = context;
-        this.setup();
-    }
-
-    protected abstract setup(): void;
+    public abstract getCommand(): vscode.Disposable;
 }

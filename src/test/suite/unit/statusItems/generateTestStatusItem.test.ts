@@ -1,21 +1,46 @@
-import { assert } from 'console';
+import * as assert from 'assert';
 import * as vscode from 'vscode';
-import * as testy from '../../../../extension';
 import GenerateTestStatusItem from "../../../../statusItems/generateTestStatusItem";
+import { setConfigurations } from '../../../utils/modifyConfigurationUtil';
 
 suite("Generate test file name", () => {
-    let generateTestStatusItem: GenerateTestStatusItem;
-    let context: vscode.ExtensionContext;
+    let generateTestStatusItem: GenerateTestStatusItem = new GenerateTestStatusItem;
+    let sourceFileName: string;
 
-    setup(async () => {
-        const extension = vscode.extensions.getExtension("publisher.testy");
-        context = await extension?.activate();
+    let filenameGenerationType: string;
+    let filenameGenerationText: string;
+
+    setup(() => {
+        generateTestStatusItem = new GenerateTestStatusItem();
+        filenameGenerationType = "prefix";
+        filenameGenerationText = "";
     });
 
     test('Generate test file with custom prefix', () => {
-        assert(1 === 6 * 1);
+        filenameGenerationType = "prefix";
+        filenameGenerationText = "test_";
+        
+        setConfigurations(filenameGenerationType, filenameGenerationText);
+
+        sourceFileName = "sample_component.py";
+        let expectedFileName = "test_sample_component.py";
+        let testFileName = generateTestStatusItem.generateTestFileName(sourceFileName);
+        
+        assert.equal(expectedFileName, testFileName);
     });
 
+    test ('Generate test file with custom suffix', () => {
+        filenameGenerationType = "suffix";
+        filenameGenerationText = "Test";
+
+        setConfigurations(filenameGenerationType, filenameGenerationText);
+
+        sourceFileName = "SampleComponent.java";
+        let expectedFileName = "SampleComponentTest.java";
+        let testFileName = generateTestStatusItem.generateTestFileName(sourceFileName);
+
+        assert.equal(expectedFileName, testFileName);
+    });
 });
 
 
