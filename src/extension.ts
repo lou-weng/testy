@@ -1,9 +1,7 @@
 import * as vscode from 'vscode';
 
-import setGenerateStatusItem from "./statusItems/generateTestFileStatus";
-import setHelloWorldStatusItem from "./statusItems/helloWorldStatus";
+import GenerateTestStatusItem from "./statusItems/generateTestStatusItem";
 
 export function activate(context: vscode.ExtensionContext) {
-	setHelloWorldStatusItem(context);
-	setGenerateStatusItem(context);
+	new GenerateTestStatusItem(context);
 }
