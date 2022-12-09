@@ -21,28 +21,33 @@
             }
         ],
         "configuration": {
-            "title": "Clickr",
+            "title": "Testy",
             "properties": {
-                "clickr.required.setCodeSourceDirectory": {
+                "testy.required.setCodeSourceDirectory": {
                     "type": "string",
                     "default": "",
                     "description": "Specifies the folder path containing the source code of your application."
                 },
-                "clickr.required.setTestSourceDirectory": {
+                "testy.required.setTestSourceDirectory": {
                     "type": "string",
                     "default": "",
                     "description": "Specifies the folder path containing the test code of your application."
                 },
-                "clickr.testGeneration.setTestFileNameGenerationType": {
+                "testy.testGeneration.setTestFileNameGenerationType": {
                     "type": "string",
                     "default": "prefix",
-                    "enum": ["prefix", "suffix"],
+                    "enum": [
+                        "prefix",
+                        "suffix",
+                        "none"
+                    ],
                     "enumDescriptions": [
-                        "Adds a prefix to the start of a file name. Example: (prefix 'test_' for python tests) test_class_file.py",
-                        "Adds a suffix to the end of a file name. Example:(suffix 'Test' for java tests) ClassFileTest.java"
+                        "Adds a prefix to the start of a file name. Example: (prefix 'test_' for python tests) test_class_file.py.",
+                        "Adds a suffix to the end of a file name. Example:(suffix 'Test' for java tests) ClassFileTest.java.",
+                        "Does not change source file's name when generating test file into test folder."
                     ]
                 },
-                "clickr.testGeneration.setTestFileAppendText": {
+                "testy.testGeneration.setTestFileAppendText": {
                     "type": "string",
                     "default": "test_",
                     "markdownDescription": "Based on `#clickr.testGeneration.setTestFileNameGenerationType#`, change the appended prefix/suffix text when generating a test file based on your project's use case."
@@ -62,19 +67,19 @@
         "test": "node ./out/test/runTest.js"
     },
     "devDependencies": {
-        "@types/vscode": "^1.73.0",
         "@types/glob": "^8.0.0",
         "@types/mocha": "^10.0.1",
         "@types/node": "16.x",
+        "@types/vscode": "^1.73.0",
         "@typescript-eslint/eslint-plugin": "^5.45.0",
         "@typescript-eslint/parser": "^5.45.0",
+        "@vscode/test-electron": "^2.2.0",
         "eslint": "^8.28.0",
         "glob": "^8.0.3",
         "mocha": "^10.1.0",
-        "typescript": "^4.9.3",
         "ts-loader": "^9.4.1",
+        "typescript": "^4.9.3",
         "webpack": "^5.75.0",
-        "webpack-cli": "^5.0.0",
-        "@vscode/test-electron": "^2.2.0"
+        "webpack-cli": "^5.0.0"
     }
 }
