@@ -42,12 +42,12 @@ export default class GenerateTestStatusItem extends StatusItem {
 
 		switch(fileGenerationType) {
 			case "prefix": {
-				testFileName = fileGenerateText + sourceFileName;
+				testFileName = `${fileGenerateText}${sourceFileName}`;
 				break;
 			}
 			case "suffix": {
 				let splitSourceFileName = sourceFileName.split(".");
-				testFileName = splitSourceFileName[0] + fileGenerateText + splitSourceFileName[1];
+				testFileName = `${splitSourceFileName[0]}${fileGenerateText}.${splitSourceFileName[1]}`;
 				break;
 			}
 			default: {

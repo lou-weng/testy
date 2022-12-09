@@ -1,45 +1,61 @@
 import * as assert from 'assert';
-import * as vscode from 'vscode';
 import GenerateTestStatusItem from "../../../../statusItems/generateTestStatusItem";
-import { setConfigurations } from '../../../utils/modifyConfigurationUtil';
+import { resetConfigurations, setConfigurations } from '../../../utils/modifyConfigurationUtil';
 
 suite("Generate test file name", () => {
     let generateTestStatusItem: GenerateTestStatusItem = new GenerateTestStatusItem;
-    let sourceFileName: string;
-
     let filenameGenerationType: string;
     let filenameGenerationText: string;
 
+    let sourceFileName: string;
+    let expectedFileName: string;
+    let generatedFileName: string;
+
     setup(() => {
         generateTestStatusItem = new GenerateTestStatusItem();
-        filenameGenerationType = "prefix";
-        filenameGenerationText = "";
     });
 
-    test('Generate test file with custom prefix', () => {
+    test('Generate test file with custom prefix', async () => {
         filenameGenerationType = "prefix";
         filenameGenerationText = "test_";
         
-        setConfigurations(filenameGenerationType, filenameGenerationText);
+        await setConfigurations(filenameGenerationType, filenameGenerationText);
 
         sourceFileName = "sample_component.py";
-        let expectedFileName = "test_sample_component.py";
-        let testFileName = generateTestStatusItem.generateTestFileName(sourceFileName);
+        expectedFileName = "test_sample_component.py";
+        generatedFileName = generateTestStatusItem.generateTestFileName(sourceFileName);
         
-        assert.equal(expectedFileName, testFileName);
+        assert.equal(expectedFileName, generatedFileName);
     });
 
-    test ('Generate test file with custom suffix', () => {
+    test ('Generate test file with custom suffix', async () => {
         filenameGenerationType = "suffix";
         filenameGenerationText = "Test";
 
-        setConfigurations(filenameGenerationType, filenameGenerationText);
+        await setConfigurations(filenameGenerationType, filenameGenerationText);
 
         sourceFileName = "SampleComponent.java";
-        let expectedFileName = "SampleComponentTest.java";
-        let testFileName = generateTestStatusItem.generateTestFileName(sourceFileName);
+        expectedFileName = "SampleComponentTest.java";
+        generatedFileName = generateTestStatusItem.generateTestFileName(sourceFileName);
 
-        assert.equal(expectedFileName, testFileName);
+        assert.equal(expectedFileName, generatedFileName);
+    });
+
+    test ('Generate test file with none generation type', async () => {
+        filenameGenerationType = "none";
+        filenameGenerationText = "";
+
+        await setConfigurations(filenameGenerationType, filenameGenerationText);
+
+        sourceFileName = "SampleComponent.java";
+        expectedFileName = sourceFileName;
+        generatedFileName = generateTestStatusItem.generateTestFileName(sourceFileName);
+
+        assert.equal(expectedFileName, generatedFileName);
+    });
+
+    suiteTeardown(() => {
+        resetConfigurations();
     });
 });
 
@@ -47,7 +63,7 @@ suite("Generate test file name", () => {
 /*
     Test Cases
         - prefix
-            - with valid prefix text
+            - [ ] with valid prefix text
             - with blank prefix text (error)
             - with invalid prefix text
         - suffix
