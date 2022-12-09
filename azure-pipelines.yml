@@ -11,8 +11,7 @@ strategy:
     linux:
       imageName: 'ubuntu-latest'
 
-pool:
-  vmImage: $(imageName)
+pool: Azure Pipelines
 
 steps:
 
