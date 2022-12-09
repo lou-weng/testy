@@ -1,7 +1,5 @@
-on:
-  push:
-    branches:
-      - main
+name: Execute Linters and Tests
+on: pull_request 
 
 jobs:
   ci:
