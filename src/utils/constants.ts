@@ -6,5 +6,5 @@ export const CONFIGURATION_SET_CODE_SOURCE_DIRECTORY = "required.setCodeSourceDi
 export const CONFIGURATION_SET_TEST_SOURCE_DIRECTORY = "required.setTestSourceDirectory";
 
 export const COMMAND_GENERATE_TEST = "testy.generateTest";
-export const COMMAND_MOCK = "test.mock";
 export const COMMAND_OPEN_SETTINGS = "testy.openSettings";
+export const COMMAND_NAVIGATE_TO_SOURCE = "testy.navigateToSource";
