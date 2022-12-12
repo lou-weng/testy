@@ -5,20 +5,46 @@ import { COMMAND_GENERATE_TEST, CONFIGURATION_SET_CODE_SOURCE_DIRECTORY, CONFIGU
 
 import StatusItem from './statusItem';
 
+const TOOLTIP = `Testy Navigate To Test:
+Go from source file to test code file. 
+Will generate test code file if it doesn't exist.
+`;
+
 export default class GenerateTestStatusItem extends StatusItem {
 	private commandId: string = COMMAND_GENERATE_TEST;
+	private generateTestStatusItem: vscode.StatusBarItem;
 
-	public getStatusBarItem(): vscode.StatusBarItem {
-		const generateTestStatusItem: vscode.StatusBarItem = vscode.window.createStatusBarItem(
+	constructor() {
+		super();
+		this.generateTestStatusItem = vscode.window.createStatusBarItem(
 			vscode.StatusBarAlignment.Right, 
 			100
 		);
-		generateTestStatusItem.command = this.commandId;
-		generateTestStatusItem.text = "Generate";
-		generateTestStatusItem.show();
-
-		return generateTestStatusItem;
+		this.generateTestStatusItem.command = this.commandId;
+		this.generateTestStatusItem.text = "Testy $(symbol-boolean)";
+		this.generateTestStatusItem.tooltip = TOOLTIP;
+		this.windowUpdateAction();
 	}
+
+	public getStatusBarItem(): vscode.StatusBarItem {
+		return this.generateTestStatusItem;
+	}
+
+	public windowUpdateAction(): void {
+		const activeFilePath: string | undefined = vscode.window.activeTextEditor?.document.uri.path;
+		const sourcePath: string | undefined = vscode.workspace
+            .getConfiguration(EXTENSION_NAME)
+            .get(CONFIGURATION_SET_CODE_SOURCE_DIRECTORY);
+        const testPath: string | undefined = vscode.workspace
+            .getConfiguration(EXTENSION_NAME)
+            .get(CONFIGURATION_SET_TEST_SOURCE_DIRECTORY);
+
+		if (activeFilePath!.startsWith(sourcePath!) && !activeFilePath?.startsWith(testPath!)) {
+			this.generateTestStatusItem.show();
+		} else {
+			this.generateTestStatusItem.hide();
+		}
+    }
 
 	public getCommand(): vscode.Disposable {
 		const command = vscode.commands.registerCommand(this.commandId, () => {

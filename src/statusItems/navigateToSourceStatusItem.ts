@@ -3,20 +3,46 @@ import * as path from 'path';
 import { COMMAND_NAVIGATE_TO_SOURCE, CONFIGURATION_SET_CODE_SOURCE_DIRECTORY, CONFIGURATION_SET_TEST_FILE_NAME_GENERATION_TEXT, CONFIGURATION_SET_TEST_FILE_NAME_GENERATION_TYPE, CONFIGURATION_SET_TEST_SOURCE_DIRECTORY, EXTENSION_NAME } from "../utils/constants";
 import StatusItem from "./statusItem";
 
+const TOOLTIP = `Testy Navigate To Source:
+Go from test file to source code file (only if it exists).
+`;
+
 export default class NavigateToSourceStatusItem extends StatusItem {
     private commandId: string = COMMAND_NAVIGATE_TO_SOURCE;
-    
-    public getStatusBarItem(): vscode.StatusBarItem {
-        const generateNavigateSourceStatusItem: vscode.StatusBarItem = vscode.window.createStatusBarItem(
+    private navigateSourceStatusItem: vscode.StatusBarItem;
+
+    constructor() {
+        super();
+        this.navigateSourceStatusItem = vscode.window.createStatusBarItem(
             vscode.StatusBarAlignment.Right,
             100
         );
-        generateNavigateSourceStatusItem.command = this.commandId;
-        generateNavigateSourceStatusItem.text = "Navigate";
-        generateNavigateSourceStatusItem.show();
-
-        return generateNavigateSourceStatusItem;
+        this.navigateSourceStatusItem.command = this.commandId;
+        this.navigateSourceStatusItem.text = "Testy $(symbol-boolean)";
+        this.navigateSourceStatusItem.tooltip = TOOLTIP;
+        this.windowUpdateAction();
     }
+    
+    public getStatusBarItem(): vscode.StatusBarItem {
+        return this.navigateSourceStatusItem;
+    }
+
+    public windowUpdateAction(): void {
+		const activeFilePath: string | undefined = vscode.window.activeTextEditor?.document.uri.path;
+		const sourcePath: string | undefined = vscode.workspace
+            .getConfiguration(EXTENSION_NAME)
+            .get(CONFIGURATION_SET_CODE_SOURCE_DIRECTORY);
+        const testPath: string | undefined = vscode.workspace
+            .getConfiguration(EXTENSION_NAME)
+            .get(CONFIGURATION_SET_TEST_SOURCE_DIRECTORY);
+
+		if (!activeFilePath!.startsWith(sourcePath!) && activeFilePath?.startsWith(testPath!)) {
+			this.navigateSourceStatusItem.show();
+		} else {
+			this.navigateSourceStatusItem.hide();
+		}
+    }
+
     public getCommand(): vscode.Disposable {
         const command = vscode.commands.registerCommand(this.commandId, () => {
             this.navigateToSourceFile();
