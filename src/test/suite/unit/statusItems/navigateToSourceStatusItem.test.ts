@@ -70,7 +70,7 @@ suite('Generate correct source file name given test file name', () => {
     });
 
     suiteTeardown(() => {
-        resetConfigurations();
+        void resetConfigurations();
     });
 });
 
@@ -155,9 +155,9 @@ suite('Generate source file path given a test file path', () => {
         filenameGenerationText = "_text";
         await setConfigurations(filenameGenerationType, filenameGenerationText);
         
-        testDirectoryPath = "project/test/";
+        testDirectoryPath = "project/src/test/";
         sourceDirectoryPath = "project/src/";
-        activeFilePath = "project/test/test_sample_component.py";
+        activeFilePath = "project/src/test/test_sample_component.py";
 
         generatedParsedPath = navigateToSourceStatusItem.generateSourceFilePath(
             sourceDirectoryPath, 
@@ -168,5 +168,9 @@ suite('Generate source file path given a test file path', () => {
 
         assert.equal(generatedParsedPath.base, expectedParsedPath.base);
         assert.equal(generatedParsedPath.dir, expectedParsedPath.dir);
+    });
+
+    suiteTeardown(() => {
+        void resetConfigurations();
     });
 });
