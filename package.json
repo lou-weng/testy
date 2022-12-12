@@ -1,5 +1,6 @@
 {
     "name": "testy",
+    "publisher": "louprod",
     "displayName": "testy",
     "description": "extension to help with navigating those cumbersome tests",
     "version": "0.0.1",
@@ -14,12 +15,6 @@
     ],
     "main": "./dist/extension.js",
     "contributes": {
-        "commands": [
-            {
-                "command": "testy.helloWorld",
-                "title": "Hello World"
-            }
-        ],
         "configuration": {
             "title": "Testy",
             "properties": {

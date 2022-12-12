@@ -3,16 +3,21 @@ import { StatusBarItem, Disposable } from "vscode";
 import { COMMAND_OPEN_SETTINGS, EXTENSION_NAME } from "../utils/constants";
 import StatusItem from "./statusItem";
 
+const TOOLTIP = `Testy Settings: Configure settings for the Testy extension. 
+The absolute paths of your source code folder and test folder are needed. 
+`;
+
 export default class SettingsStatusItem extends StatusItem {
     private commandId: string = COMMAND_OPEN_SETTINGS;
     
     public getStatusBarItem(): StatusBarItem {
         const generateSettingsStatusItem: vscode.StatusBarItem = vscode.window.createStatusBarItem(
             vscode.StatusBarAlignment.Right, 
-            100
+            99
         );
         generateSettingsStatusItem.command = this.commandId;
-        generateSettingsStatusItem.text = "Settings";
+        generateSettingsStatusItem.text = "Testy $(gear)";
+        generateSettingsStatusItem.tooltip = TOOLTIP;
         generateSettingsStatusItem.show();
 
         return generateSettingsStatusItem;
@@ -25,5 +30,4 @@ export default class SettingsStatusItem extends StatusItem {
     
         return command;
     }
-
 }
