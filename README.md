@@ -1,4 +1,4 @@
-# testy README
+# Testy README
 
 Testy is a small utility tool for programmers who hate context switching between their source and test files. With the click of a button, testy will map your file from your source code folder, into your test code folder. 
 
