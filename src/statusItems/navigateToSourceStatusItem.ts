@@ -69,11 +69,11 @@ export default class NavigateToSourceStatusItem extends StatusItem {
                 break;
             }
             case "suffix": {
-                sourceFileName = testFileName.name.substring(0, fileGenerateText!.length + 1);
+                sourceFileName = testFileName.name.substring(0, testFileName.name.length - fileGenerateText!.length);
                 break;
             }
             default: {
-                sourceFileName = testFileName.base;
+                sourceFileName = testFileName.name;
                 break;
             }
         }
