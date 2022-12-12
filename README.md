@@ -1,71 +1,39 @@
 # testy README
 
-This is the README for your extension "testy". After writing up a brief description, we recommend including the following sections.
+Testy is a small utility tool for programmers who hate context switching between their source and test files. With the click of a button, testy will map your file from your source code folder, into your test code folder. 
+
+NOTE: Testy assumes that your test file structure will mirror your source code file structure. 
 
 ## Features
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
+Given a file within a soure code directory, automatically generate an accompanying test file and easily navigate between the two. 
 
-For example if there is an image subfolder under your extension project workspace:
+![Navigation](images/testy_navigate.gif)
 
-\!\[feature X\]\(images/feature-x.png\)
+Easy access to configure Testy settings
 
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
+![Settings](images/testy_settings.gif)
 
 ## Requirements
 
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
+The extension must be configured before use. Click the `Testy Settings` status item button to open the settings. 
+
+1. add the absolute file path of your project's source code directory.
+2. add the absolute file path of your project's test code directory.
+3. configure how you want Testy to generate your test file names.
+   1. prefix example: append `test_` to all python tests.
+   2. suffix example: append `Test` to all java tests.
+   3. none: just directly copy the file name from source directory to test directory.
 
 ## Extension Settings
 
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
-
-For example:
-
 This extension contributes the following settings:
 
-* `myExtension.enable`: Enable/disable this extension.
-* `myExtension.thing`: Set to `blah` to do something.
+* `testy.required.setCodeSourceDirectory`: Add absolute file path of your source directory.
+* `testy.required.setTestSourceDirectory`: Add absolute file path of your test directory.
+* `testy.testGeneration.setTestFileNameGenerationType`: Configure how you want to customize your test file name generation. You can either add to start or end of your source file name. 
+* `testy.testGeneration.setTestFileAppendText`: What custom text you want to append/prepend to your source file name to create a test file name.
 
 ## Known Issues
 
-Calling out known issues can help limit users opening duplicate issues against your extension.
-
-## Release Notes
-
-Users appreciate release notes as you update your extension.
-
-### 1.0.0
-
-Initial release of ...
-
-### 1.0.1
-
-Fixed issue #.
-
-### 1.1.0
-
-Added features X, Y, and Z.
-
----
-
-## Following extension guidelines
-
-Ensure that you've read through the extensions guidelines and follow the best practices for creating your extension.
-
-* [Extension Guidelines](https://code.visualstudio.com/api/references/extension-guidelines)
-
-## Working with Markdown
-
-You can author your README using Visual Studio Code. Here are some useful editor keyboard shortcuts:
-
-* Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux).
-* Toggle preview (`Shift+Cmd+V` on macOS or `Shift+Ctrl+V` on Windows and Linux).
-* Press `Ctrl+Space` (Windows, Linux, macOS) to see a list of Markdown snippets.
-
-## For more information
-
-* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
-
-**Enjoy!**
+* Error thrown when navigating from a test file to a source file that doesn't exist. Testy only generates tests files from source files, and not the other way around.

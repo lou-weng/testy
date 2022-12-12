@@ -20,7 +20,12 @@ export default class NavigateToSourceStatusItem extends StatusItem {
         this.navigateSourceStatusItem.command = this.commandId;
         this.navigateSourceStatusItem.text = "Testy $(symbol-boolean)";
         this.navigateSourceStatusItem.tooltip = TOOLTIP;
-        this.windowUpdateAction();
+
+        if (vscode.window.activeTextEditor?.document.uri.path) {
+			this.windowUpdateAction();
+		} else {
+			this.navigateSourceStatusItem.hide();
+		}
     }
     
     public getStatusBarItem(): vscode.StatusBarItem {

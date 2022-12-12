@@ -23,7 +23,12 @@ export default class GenerateTestStatusItem extends StatusItem {
 		this.generateTestStatusItem.command = this.commandId;
 		this.generateTestStatusItem.text = "Testy $(symbol-boolean)";
 		this.generateTestStatusItem.tooltip = TOOLTIP;
-		this.windowUpdateAction();
+		
+		if (vscode.window.activeTextEditor?.document.uri.path) {
+			this.windowUpdateAction();
+		} else {
+			this.generateTestStatusItem.hide();
+		}
 	}
 
 	public getStatusBarItem(): vscode.StatusBarItem {
